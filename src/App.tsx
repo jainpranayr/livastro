@@ -1,7 +1,5 @@
-import Card from './components/Card'
-import CardFooter from './components/CardFooter'
-import CardHeader from './components/CardHeader'
-import Form from './components/Form'
+import { Card, CardFooter, CardHeader } from './components/Card'
+import { Form } from './components/Form'
 
 function App() {
 	return (

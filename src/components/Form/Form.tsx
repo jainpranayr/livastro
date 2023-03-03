@@ -1,5 +1,5 @@
-import { useAppContext } from '../context/AppContext'
-import { DetailLabel, DetailRow, DetailValue } from './Details'
+import { useAppContext } from '../../context/AppContext'
+import { DetailLabel, DetailRow, DetailValue } from '../Common'
 
 const Form = () => {
 	const { currentQuestion, isSubmitted, allAnswers } = useAppContext()

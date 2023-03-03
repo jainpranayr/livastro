@@ -1,5 +1,5 @@
-import { useAppContext } from '../context/AppContext'
-import Button from './Button'
+import { useAppContext } from '../../context/AppContext'
+import { Button } from '../Common'
 
 const CardFooter = () => {
 	const { isLastQuestion, isSubmitted, next, submit } = useAppContext()

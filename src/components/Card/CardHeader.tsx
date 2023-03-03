@@ -1,5 +1,5 @@
-import { LeftArrowIcon } from '../assets/icons'
-import { useAppContext } from '../context/AppContext'
+import { LeftArrowIcon } from '../../assets/icons'
+import { useAppContext } from '../../context/AppContext'
 
 const CardHeader = () => {
 	const { isFirstQuestion, prev, state, totalQuestions } = useAppContext()
