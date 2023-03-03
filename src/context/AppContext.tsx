@@ -2,15 +2,19 @@ import { createContext, ReactNode, useContext, useState } from 'react'
 import { QuestionData } from '../data'
 import { Question } from '../types'
 
+type Answer = {
+	[question: string]: string | string[] | null
+}
+
 type AppState = {
 	currentStep: number
 	currentQuestion: Question
 	currentAnswer: string | string[] | null
-	answers: Record<string, string | string[]>
+	answers: Answer
 	questions: Question[]
 }
 
-export const AppContext = createContext<{
+type AppContextType = {
 	state: AppState
 	totalQuestions: number
 	currentQuestion: Question
@@ -21,18 +25,22 @@ export const AppContext = createContext<{
 	isFirstQuestion: boolean
 	isLastQuestion: boolean
 	isSubmitted: boolean
-	updateAnswer: (questionId: number, answer: string | string[]) => void
-	allAnswers: Record<string, string | string[]>
-}>({
-	state: {
-		currentStep: 0,
-		currentQuestion: QuestionData.questions[0],
-		currentAnswer: null,
-		answers: {},
-		questions: QuestionData.questions,
-	},
-	totalQuestions: 0,
+	updateAnswer: (question: string, answer: string | string[]) => void
+	allAnswers: Answer
+}
+
+const DEFAULT_STATE: AppState = {
+	currentStep: 0,
 	currentQuestion: QuestionData.questions[0],
+	currentAnswer: null,
+	answers: {},
+	questions: QuestionData.questions,
+}
+
+export const AppContext = createContext<AppContextType>({
+	state: DEFAULT_STATE,
+	totalQuestions: 0,
+	currentQuestion: DEFAULT_STATE.currentQuestion,
 	currentQuestionAnswers: null,
 	next: () => {},
 	prev: () => {},
@@ -40,18 +48,12 @@ export const AppContext = createContext<{
 	isFirstQuestion: true,
 	isLastQuestion: false,
 	isSubmitted: false,
-	updateAnswer: (questionId: number, answer: string | string[]) => {},
+	updateAnswer: () => {},
 	allAnswers: {},
 })
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-	const [state, setState] = useState<AppState>({
-		currentStep: 0,
-		currentQuestion: QuestionData.questions[0],
-		currentAnswer: null,
-		answers: {},
-		questions: QuestionData.questions,
-	})
+	const [state, setState] = useState<AppState>(DEFAULT_STATE)
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
 	const totalQuestions = state.questions.length
@@ -61,39 +63,31 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 	const isLastQuestion = state.currentStep === totalQuestions - 1
 	const allAnswers = state.answers
 
+	const updateState = (step: number) => {
+		const question = state.questions[step]
+		const answer = state.answers[question.question] || null
+
+		setState(prevState => ({
+			...prevState,
+			currentStep: step,
+			currentQuestion: question,
+			currentAnswer: answer,
+			answers: {
+				...prevState.answers,
+				[prevState.currentQuestion.question]: prevState.currentAnswer,
+			},
+		}))
+	}
+
 	const next = () => {
 		if (state.currentStep < totalQuestions - 1) {
-			setState(prevState => ({
-				...prevState,
-				currentStep: prevState.currentStep + 1,
-				currentQuestion: prevState.questions[prevState.currentStep + 1],
-				answers: {
-					...prevState.answers,
-					[prevState.currentQuestion.questionid]: prevState.currentAnswer,
-				},
-				currentAnswer:
-					prevState.answers[
-						prevState.questions[prevState.currentStep + 1].questionid
-					] || null,
-			}))
+			updateState(state.currentStep + 1)
 		}
 	}
 
 	const prev = () => {
 		if (state.currentStep > 0) {
-			setState(prevState => ({
-				...prevState,
-				currentStep: prevState.currentStep - 1,
-				currentQuestion: prevState.questions[prevState.currentStep - 1],
-				answers: {
-					...prevState.answers,
-					[prevState.currentQuestion.questionid]: prevState.currentAnswer,
-				},
-				currentAnswer:
-					prevState.answers[
-						prevState.questions[prevState.currentStep - 1].questionid
-					] || null,
-			}))
+			updateState(state.currentStep - 1)
 
 			if (isSubmitted) {
 				setIsSubmitted(false)
@@ -106,13 +100,13 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsSubmitted(true)
 	}
 
-	const updateAnswer = (questionId: number, answer: string | string[]) => {
+	const updateAnswer = (question: string, answer: string | string[]) => {
 		setState(prevState => ({
 			...prevState,
 			currentAnswer: answer,
 			answers: {
 				...prevState.answers,
-				[questionId]: answer,
+				[question]: answer,
 			},
 		}))
 	}
