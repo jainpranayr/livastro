@@ -13,7 +13,7 @@ export const DetailLabel = ({ label }: { label: string }) => {
 }
 
 export const DetailValue = ({ value }: { value: string | string[] | null }) => {
-	if (!value) {
+	if (!value || value.length === 0) {
 		return <span className="text-red-500">Not Answered</span>
 	}
 

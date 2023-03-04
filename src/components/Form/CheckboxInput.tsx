@@ -22,10 +22,12 @@ const CheckboxInput = () => {
 			</label>
 
 			<div>
-				{currentQuestion.questionoption.map(option => (
+				{currentQuestion.questionoption.map((option, idx) => (
 					<div key={option.optionid} className="border-y py-2">
 						<input
+							autoFocus={idx === 0}
 							type="checkbox"
+							className="rounded border-gray-300 text-indigo-600 ring-offset-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 							id={`${currentQuestion.questionid}_${option.optionid}`}
 							value={option.optionvalue}
 							checked={selectedValues.includes(option.optionvalue)}

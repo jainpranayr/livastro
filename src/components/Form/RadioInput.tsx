@@ -11,11 +11,13 @@ const RadioInput = () => {
 			</label>
 
 			<div>
-				{currentQuestion.questionoption.map(option => (
+				{currentQuestion.questionoption.map((option, idx) => (
 					<div key={option.optionid}>
 						<div className="border-y py-2">
 							<input
+								autoFocus={idx === 0}
 								type="radio"
+								className="ring-offset-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 								value={option.optionvalue}
 								onChange={() =>
 									updateAnswer(currentQuestion.question, option.optionvalue)

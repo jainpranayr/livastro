@@ -8,10 +8,11 @@ const CardHeader = () => {
 	return (
 		<div className="flex items-center bg-slate-50 px-4 py-6">
 			{!isFirstQuestion && (
-				<LeftArrowIcon
-					className="h-6 w-6 cursor-pointer text-black"
+				<button
 					onClick={prev}
-				/>
+					className="rounded-full border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+					<LeftArrowIcon className="h-6 w-6 cursor-pointer text-black" />
+				</button>
 			)}
 			<div className="ml-auto max-w-max">
 				<span>{currentStep + 1}</span> / <span>{totalQuestions}</span>

@@ -9,11 +9,11 @@ const TextAreaInput = () => {
 				{currentQuestion.question}
 			</label>
 			<textarea
+				autoFocus
 				rows={6}
 				name="comment"
 				id="comment"
-				className="block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-				defaultValue={''}
+				className="block w-full rounded-md border-2 border-gray-300 px-2 shadow-sm focus:border-indigo-500 focus:outline-none sm:text-sm"
 				onChange={e => updateAnswer(currentQuestion.question, e.target.value)}
 			/>
 		</div>
