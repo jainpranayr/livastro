@@ -1,18 +1,23 @@
 import { useAppContext } from '../../context/AppContext'
-import CheckboxInput from './CheckboxInput'
-import DateInpiut from './DateInput'
-import RadioInput from './RadioInput'
-import TextAreaInput from './TextAreaInput'
+import { INPUT_COMPONENTS } from './utils'
 
-const Form = () => {
+const Form = (): JSX.Element => {
+	// Get the current question from the app context
 	const { currentQuestion } = useAppContext()
+
+	// Look up the input component for the current question's questiontype using the INPUT_COMPONENTS object
+	const InputComponent = INPUT_COMPONENTS[currentQuestion.questiontype]
 
 	return (
 		<form>
-			{currentQuestion.questiontype === 'Radio' && <RadioInput />}
-			{currentQuestion.questiontype === 'Date' && <DateInpiut />}
-			{currentQuestion.questiontype === 'Textarea' && <TextAreaInput />}
-			{currentQuestion.questiontype === 'Checkbox' && <CheckboxInput />}
+			{/* Render the input component if it exists for the current question's questiontype, otherwise show a message */}
+			{InputComponent ? (
+				<InputComponent />
+			) : (
+				<p className="my-6 block text-center text-lg capitalize">
+					No question to display
+				</p>
+			)}
 		</form>
 	)
 }

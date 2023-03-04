@@ -10,7 +10,7 @@ export type QuestionOption = {
 export type Question = {
 	questionid: number
 	question: string
-	questiontype: 'Radio' | 'Checkbox' | 'Dropdown' | 'Textarea' | 'Date'
+	questiontype: 'Radio' | 'Checkbox' | 'Textarea' | 'Date'
 	attributetype: number
 	validation: boolean
 	questionoption: QuestionOption[]
