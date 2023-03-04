@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from 'react'
 
+// A reusable button component with some default styles
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button = ({ className, children, ...props }: ButtonProps) => {

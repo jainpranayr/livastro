@@ -1,6 +1,7 @@
 import { useAppContext } from '../../context/AppContext'
 import { DetailLabel, DetailRow, DetailValue } from './Details'
 
+//  A component for rendering details about a submitted form data
 const SubmittedAnswers = () => {
 	const { allAnswers } = useAppContext()
 

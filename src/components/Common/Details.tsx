@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+//  Set of components for rendering details as label: value
+
 export const DetailRow = ({ children }: { children: ReactNode }) => {
 	return (
 		<div className="flex items-center justify-start space-x-3">
