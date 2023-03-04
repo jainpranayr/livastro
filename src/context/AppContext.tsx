@@ -3,13 +3,13 @@ import { QuestionData } from '../data'
 import { Question } from '../types'
 
 type Answer = {
-	[question: string]: string | string[] | null
+	[question: string]: string | null
 }
 
 type AppState = {
 	currentStep: number
 	currentQuestion: Question
-	currentAnswer: string | string[] | null
+	currentAnswer: string | null
 	answers: Answer
 	questions: Question[]
 }
@@ -18,14 +18,14 @@ type AppContextType = {
 	state: AppState
 	totalQuestions: number
 	currentQuestion: Question
-	currentQuestionAnswers: string | string[] | null
+	currentQuestionAnswers: string | null
 	next: () => void
 	prev: () => void
 	submit: () => void
 	isFirstQuestion: boolean
 	isLastQuestion: boolean
 	isSubmitted: boolean
-	updateAnswer: (question: string, answer: string | string[]) => void
+	updateAnswer: (question: string, answer: string) => void
 	allAnswers: Answer
 }
 
@@ -105,7 +105,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsSubmitted(true)
 	}
 
-	const updateAnswer = (question: string, answer: string | string[]) => {
+	const updateAnswer = (question: string, answer: string) => {
 		setState(prevState => ({
 			...prevState,
 			currentAnswer: answer,

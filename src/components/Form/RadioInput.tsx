@@ -2,7 +2,8 @@ import { useAppContext } from '../../context/AppContext'
 import { Question } from '../../types'
 
 const RadioInput = () => {
-	const { currentQuestion, updateAnswer } = useAppContext()
+	const { currentQuestion, updateAnswer, currentQuestionAnswers } =
+		useAppContext()
 
 	return (
 		<div className="my-6 space-y-3">
@@ -19,6 +20,7 @@ const RadioInput = () => {
 								type="radio"
 								className="ring-offset-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 								value={option.optionvalue}
+								checked={currentQuestionAnswers === option.optionvalue}
 								onChange={() =>
 									updateAnswer(currentQuestion.question, option.optionvalue)
 								}

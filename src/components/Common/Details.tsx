@@ -12,14 +12,10 @@ export const DetailLabel = ({ label }: { label: string }) => {
 	return <span className="mr-4 text-gray-700">{label}:</span>
 }
 
-export const DetailValue = ({ value }: { value: string | string[] | null }) => {
+export const DetailValue = ({ value }: { value: string | null }) => {
 	if (!value || value.length === 0) {
 		return <span className="text-red-500">Not Answered</span>
 	}
 
-	return (
-		<span className="text-gray-800">
-			{typeof value === 'string' ? value : value.join(', ')}
-		</span>
-	)
+	return <span className="text-gray-800">{value}</span>
 }

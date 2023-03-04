@@ -2,8 +2,11 @@ import { useState } from 'react'
 import { useAppContext } from '../../context/AppContext'
 
 const CheckboxInput = () => {
-	const { currentQuestion, updateAnswer } = useAppContext()
-	const [selectedValues, setSelectedValues] = useState<string[]>([])
+	const { currentQuestion, updateAnswer, currentQuestionAnswers } =
+		useAppContext()
+	const [selectedValues, setSelectedValues] = useState<string[]>(
+		currentQuestionAnswers?.split(', ') ?? []
+	)
 
 	const handleCheckboxChange = (value: string) => {
 		setSelectedValues(prevSelectedValues => {
@@ -12,7 +15,7 @@ const CheckboxInput = () => {
 			}
 			return [...prevSelectedValues, value]
 		})
-		updateAnswer(currentQuestion.question, selectedValues)
+		updateAnswer(currentQuestion.question, selectedValues.join(', '))
 	}
 
 	return (
@@ -33,7 +36,10 @@ const CheckboxInput = () => {
 							checked={selectedValues.includes(option.optionvalue)}
 							onChange={() => handleCheckboxChange(option.optionvalue)}
 							onBlur={() =>
-								updateAnswer(currentQuestion.question, selectedValues)
+								updateAnswer(
+									currentQuestion.question,
+									selectedValues.join(', ')
+								)
 							}
 						/>
 						<label
