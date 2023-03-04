@@ -1,34 +1,19 @@
 import { useAppContext } from '../../context/AppContext'
-import { DetailLabel, DetailRow, DetailValue } from '../Common'
+import CheckboxInput from './CheckboxInput'
+import DateInpiut from './DateInput'
+import RadioInput from './RadioInput'
+import TextAreaInput from './TextAreaInput'
 
 const Form = () => {
-	const { currentQuestion, isSubmitted, allAnswers } = useAppContext()
+	const { currentQuestion } = useAppContext()
 
 	return (
-		<>
-			{isSubmitted ? (
-				<div className="w-full flex-1 bg-white">
-					<p className="my-6 block text-center text-lg capitalize">
-						Your Answers:
-					</p>
-					<dl className="mx-auto max-w-max">
-						{Object.entries(allAnswers).map(([question, answer]) => (
-							<DetailRow key={question}>
-								<DetailLabel label={question} />
-								<DetailValue value={answer} />
-							</DetailRow>
-						))}
-					</dl>
-				</div>
-			) : (
-				<form className="w-full flex-1 bg-white">
-					<label className="my-6 block text-center text-lg capitalize">
-						{currentQuestion.question}
-					</label>
-					{/* render form inputs here */}
-				</form>
-			)}
-		</>
+		<form>
+			{currentQuestion.questiontype === 'Radio' && <RadioInput />}
+			{currentQuestion.questiontype === 'Date' && <DateInpiut />}
+			{currentQuestion.questiontype === 'Textarea' && <TextAreaInput />}
+			{currentQuestion.questiontype === 'Checkbox' && <CheckboxInput />}
+		</form>
 	)
 }
 

@@ -64,6 +64,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 	const allAnswers = state.answers
 
 	const updateState = (step: number) => {
+		if (isSubmitted) {
+			setState(DEFAULT_STATE)
+			return
+		}
+
 		const question = state.questions[step]
 		const answer = state.answers[question.question] || null
 

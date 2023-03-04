@@ -13,9 +13,13 @@ export const DetailLabel = ({ label }: { label: string }) => {
 }
 
 export const DetailValue = ({ value }: { value: string | string[] | null }) => {
+	if (!value) {
+		return <span className="text-red-500">Not Answered</span>
+	}
+
 	return (
-		<span className={`truncate ${value ? 'text-gray-800' : 'text-red-500'}`}>
-			{value || 'Not Answerd'}
+		<span className="text-gray-800">
+			{typeof value === 'string' ? value : value.join(', ')}
 		</span>
 	)
 }
